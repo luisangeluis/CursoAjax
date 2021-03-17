@@ -75,7 +75,7 @@
     const $fetch = document.querySelector('#fetch');
     $fragment = document.createDocumentFragment();
     //THEN RESPUESTA EXITOSA
-    fetch('https://jsonplaceholder.typicode.com/user').then((res)=>{
+    fetch('https://jsonplaceholder.typicode.com/users').then((res)=>{
         //TE MANDA LA INFO EN FORMATO READABLESTREAM
         console.log(res);
         
@@ -83,7 +83,16 @@
         return res.ok?res.json():Promise.reject(res);
         
     }).then((json)=>{
+
+        json.forEach((el)=>{
+            const $li = document.createElement('li');
+            $li.innerText = `Nombre: ${el.name} email ${el.email}`;
+            $fragment.appendChild($li);
+
+        })
+        $fetch.append($fragment);
         console.log(json);
+
     }).catch((err)=>{
         console.log("Estamos en el catch: ",err);
         let message = err.statusText || "Ocurrio un error";
